@@ -32,39 +32,39 @@ def check_paren_balance(tokenized_example):
 
 # Проверка правильности постановки операторов
 def check_operators(tokens):
-    # EXPECT_OPERAND        — поиск начала операнда
-    # EXPECT_OPERAND_STRICT — поиск числа сразу после унарного оператора
-    # EXPECT_OPERATOR       — поиск оператора или ) после числа
-    state = "EXPECT_OPERAND"
+    # 0 — поиск начала операнда
+    # 1 — поиск числа сразу после унарного оператора
+    # 2       — поиск оператора или ) после числа
+    state = 0
 
     for position, token in enumerate(tokens):
-        if state == "EXPECT_OPERAND":
+        if state == 0:
             if token.token_type == "NUM":
-                state = "EXPECT_OPERATOR"
+                state = 1
             elif token.token_type == "LPAREN":
                 pass  # состояние не меняется
             elif token.token_type == "UOPERATION":
-                state = "EXPECT_OPERAND_STRICT"
+                state = 1
             else:
                 raise MissingOperandError(position)
             
-        elif state == "EXPECT_OPERAND_STRICT":
+        elif state == 1:
             if token.token_type == "NUM":
-                state = "EXPECT_OPERATOR"
+                state = 1
             elif token.token_type == "LPAREN":
-                state = "EXPECT_OPERAND"
+                state = 0
             elif token.token_type == "UOPERATION":
                 raise TwoOperatorsInRowError(position)  # цепочка унарных
             else:
                 raise MissingOperandError(position)
 
-        elif state == "EXPECT_OPERATOR":
+        elif state == 1:
             if token.token_type == "OPERATION":
-                state = "EXPECT_OPERAND"
+                state = 0
             elif token.token_type == "RPAREN":
                 pass
             else:
                 raise TwoOperatorsInRowError(position)
 
-    if state != "EXPECT_OPERATOR":
+    if state != 1:
         raise MissingOperandError(len(tokens))
