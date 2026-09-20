@@ -13,7 +13,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "calc":
-        print("calc: ", args.example)
+        print("hello")
     elif args.command == "convert":
         print("convert")
 

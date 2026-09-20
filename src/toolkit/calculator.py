@@ -9,10 +9,20 @@ OP_PRIORITY = {
     "//": 1,
 }
 
+UNARY_PRIORITY = 2
+
+def get_priority(token):
+    if token.token_type == "UOPERATION":
+        return UNARY_PRIORITY
+    return OP_PRIORITY[token.data]
+
 class Stack:
     def __init__(self):
         self.items = []
-        
+    
+    def __iter__(self):
+        return iter(reversed(self.items))
+    
     def peek(self):
         return self.items[-1]
 
@@ -28,10 +38,10 @@ class Stack:
     def lenth(self):
         return len(self.items)
 
-def manager(example):   # FIXME: Нет никакой проверки на два идущих подряд неунарных оператор(напрмиер /* или +/)
+def calc_manager(example):
     # Перевод в токены
     example = tokenizer(example)
-    paren_balance_check(example)
+
     rpn_example = example_to_rpn(example)
     return rpn_example
     result = rpn_to_result(rpn_example)
@@ -40,31 +50,25 @@ def manager(example):   # FIXME: Нет никакой проверки на д�
     
     return result
 
-def paren_balance_check(example):   #FIXME: сейчас функция првоеряет только кол-во скобок, так что есть будет )(, то ошибки не будет
-    rparen_count = 0
-    lparen_count = 0
-    for i in example:
-        if i.token_type == "LPAREN":
-            lparen_count += 1
-        elif i.token_type == "RPAREN":
-            rparen_count += 1
-    if rparen_count != lparen_count:
-        #TODO: сделать вызов ошибки баланса скобок
-        print("БАЛАНС СКОБОК НЕ СОБЛЮДЕН")
-        exit(0)
-
-def example_to_rpn(example):
+def example_to_rpn(tokenized_example):
     rpn_result = []
     stack = Stack()
     
-    for token in example:
+    for token in tokenized_example:
         if token.token_type == "NUM":
             rpn_result.append(token)
         elif token.token_type == "LPAREN":
             stack.push(token)
         elif token.token_type == "OPERATION":
-            while (not stack.is_empty() and stack.peek().token_type == "OPERATION" 
-                    and OP_PRIORITY[stack.peek().data] >= OP_PRIORITY[token.data]):
+            while (not stack.is_empty() and (stack.peek().token_type == "OPERATION" or
+                    stack.peek().token_type == "UOPERATION")
+                    and get_priority(stack.peek()) >= get_priority(token)):
+                rpn_result.append(stack.pop())
+            stack.push(token)
+        elif token.token_type == "UOPERATION":
+            while (not stack.is_empty() and (stack.peek().token_type == "OPERATION" or
+                    stack.peek().token_type == "UOPERATION")
+                    and get_priority(stack.peek()) > get_priority(token)):
                 rpn_result.append(stack.pop())
             stack.push(token)
         elif token.token_type == "RPAREN":
@@ -75,9 +79,9 @@ def example_to_rpn(example):
         rpn_result.append(stack.pop())
     return rpn_result
 
-def rpn_to_result(example):
+def rpn_to_result(tokenized_example):
     pass
 
 if __name__ == "__main__":
     example = "(1 +    1) /3.53  * 456 + 5"
-    print(manager(example))
+    print(calc_manager(example))

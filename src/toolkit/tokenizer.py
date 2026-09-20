@@ -17,7 +17,7 @@ class Token():
     token_type: str
     data: Union[None, float] = None
 
-def tokenizer(example):     # TODO: сделать проверку на нормальное кол-во скобок
+def tokenizer(example):
     # Паттерн токенизации
     TOKEN_PATTERN = compile(r"""
     (?P<NUM>\d+(\.\d+)?) |
@@ -42,8 +42,7 @@ def tokenizer(example):     # TODO: сделать проверку на нор�
         if token_type == "OMISSION":
             continue
         elif token_type == "UNKNOWN":
-            print("UNKNOWN!!!")
-            continue # TODO: Сделать вызов ошибки
+            tokenised_example.append(Token(token_type, data))
         
         if token_type == "NUM":
             tokenised_example.append(Token(token_type, float(data)))
@@ -53,6 +52,13 @@ def tokenizer(example):     # TODO: сделать проверку на нор�
             tokenised_example.append(Token(token_type))
     
     return tokenised_example
+
+def mark_unary_operators(tokenized_example):
+    for i in range(len(tokenized_example)):
+        if tokenized_example[i].token_type == "OPERATION" and tokenized_example[i].data in "+-" and (i == 0 
+            or tokenized_example[i-1].token_type == "LPAREN"
+            or tokenized_example[i-1].token_type == "OPERATION"):
+                tokenized_example[i].token_type = "UOPERATION"
     
 if __name__ == "__main__":
     print(tokenizer("(-1 +    1) /3.53  * 456"))
