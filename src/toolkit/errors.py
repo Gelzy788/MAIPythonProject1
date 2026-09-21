@@ -19,8 +19,8 @@ class MissingOperatorError(CalculatorError):
         super().__init__(f"В выражении пропущен оператор на позиции {position}")
 
 class TwoOperatorsInRowError(CalculatorError):
-    def __init__(self):
-        super().__init__("Два оператора подряд на позиции {position}")
+    def __init__(self, position):
+        super().__init__(f"Два оператора подряд на позиции {position}")
 
 class UnbalancedParenthesesError(CalculatorError):
     def __init__(self):

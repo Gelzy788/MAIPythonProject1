@@ -8,7 +8,9 @@ OPERATIONS = {
     "PLUS": "+",
     "MINUS": "-",
     "MUL": "*",
-    "DIV": "/"
+    "DIV": "/",
+    "INTDIV": "//",
+    "MOD": "%"
 }
 
 @dataclass
@@ -24,6 +26,8 @@ def tokenize(example):
     (?P<PLUS>\+) |
     (?P<MINUS>-) |
     (?P<MUL>\*) |
+    (?P<MOD>%) |
+    (?P<INTDIV>//) |
     (?P<DIV>/) |
     (?P<LPAREN>\() |
     (?P<RPAREN>\)) |

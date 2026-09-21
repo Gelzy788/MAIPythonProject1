@@ -72,9 +72,6 @@ def check_operators(tokens):
 def validate_converter():
     pass
 
-# def check_unknown_units(uni1: str, unit2: str):
-#     if 
-
 def check_value(value: str):
     try: float(value)
     except ValueError:
