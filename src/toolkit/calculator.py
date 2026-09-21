@@ -1,4 +1,4 @@
-from toolkit.validation import validate_manager
+from toolkit.validation import validate_calculator
 from toolkit.tokenizer import tokenize, mark_unary_operators
 from toolkit.tokenizer import Token
 from toolkit.errors import CalculatorError, ZeroDivError
@@ -66,13 +66,11 @@ def calc_manager(example):
     mark_unary_operators(tokenized_example)
     
     # Валидация
-    validate_manager(tokenized_example)
+    validate_calculator(tokenized_example)
     
     # Перевод в rpn
     rpn_example = example_to_rpn(tokenized_example)
-    print(rpn_example)
-    # return rpn_example
-
+    
     # Получение результата из rpn
     result = rpn_to_result(rpn_example)
     
@@ -124,7 +122,6 @@ def rpn_to_result(tokenized_example):
             operation = token.data
             
             #  Отлавливаем ошибку деления на 0
-            print(f"num1:{num1.data} \t num2: {num2.data}\t op: {operation}")
             if operation in ["/", "//", "%"] and num1.data == 0:
                 raise ZeroDivError()
             

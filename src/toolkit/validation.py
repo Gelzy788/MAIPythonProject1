@@ -1,6 +1,6 @@
 from toolkit.errors import *
 
-def validate_manager(tokenized_example):
+def validate_calculator(tokenized_example):
     check_empty(tokenized_example)
     check_unknown_symbols(tokenized_example)
     check_paren_balance(tokenized_example)
@@ -69,4 +69,17 @@ def check_operators(tokens):
     if state != 2:
         raise MissingOperandError(len(tokens))
 
+def validate_converter():
+    pass
+
+# def check_unknown_units(uni1: str, unit2: str):
+#     if 
+
+def check_value(value: str):
+    try: float(value)
+    except ValueError:
+        raise InvalidValueError(value)
+
 # TODO: Сделать проверку друбных чисел
+# TODO: Не работает вывод ошибки UNKNOWN в данном рпимере: python3 -m toolkit calc "-136 ++ $25266++24.3 -4 *+4-+5- -0.6" - почему-то не отлавливается только доллар
+# TODO: В данном примере выводится не та ошибка: python3 -m toolkit calc "-136 +++ $25266++24.3 -4 *+4-+5- -0.6"
