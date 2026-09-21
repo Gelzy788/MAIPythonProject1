@@ -1,4 +1,4 @@
-from errors import *
+from toolkit.errors import *
 
 def validate_manager(tokenized_example):
     check_empty(tokenized_example)
@@ -23,7 +23,7 @@ def check_paren_balance(tokenized_example):
     for pos, token in enumerate(tokenized_example):
         if token.token_type == "LPAREN":
             balance += 1
-        elif token.token_sype == "RPAREN":
+        elif token.token_type == "RPAREN":
             balance -= 1
             if balance < 0:
                 raise UnbalancedParenthesesError()
@@ -34,13 +34,13 @@ def check_paren_balance(tokenized_example):
 def check_operators(tokens):
     # 0 — поиск начала операнда
     # 1 — поиск числа сразу после унарного оператора
-    # 2       — поиск оператора или ) после числа
+    # 2 — поиск оператора или ) после числа
     state = 0
 
     for position, token in enumerate(tokens):
         if state == 0:
             if token.token_type == "NUM":
-                state = 1
+                state = 2
             elif token.token_type == "LPAREN":
                 pass  # состояние не меняется
             elif token.token_type == "UOPERATION":
@@ -50,15 +50,15 @@ def check_operators(tokens):
             
         elif state == 1:
             if token.token_type == "NUM":
-                state = 1
+                state = 2
             elif token.token_type == "LPAREN":
                 state = 0
             elif token.token_type == "UOPERATION":
-                raise TwoOperatorsInRowError(position)  # цепочка унарных
+                raise TwoOperatorsInRowError(position)
             else:
-                raise MissingOperandError(position)
+                raise MissingOperatorError(position)
 
-        elif state == 1:
+        elif state == 2:
             if token.token_type == "OPERATION":
                 state = 0
             elif token.token_type == "RPAREN":
@@ -66,5 +66,7 @@ def check_operators(tokens):
             else:
                 raise TwoOperatorsInRowError(position)
 
-    if state != 1:
+    if state != 2:
         raise MissingOperandError(len(tokens))
+
+# TODO: Сделать проверку друбных чисел

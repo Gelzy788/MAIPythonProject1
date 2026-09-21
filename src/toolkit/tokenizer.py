@@ -17,7 +17,7 @@ class Token():
     token_type: str
     data: Union[None, float] = None
 
-def tokenizer(example):
+def tokenize(example):
     # Паттерн токенизации
     TOKEN_PATTERN = compile(r"""
     (?P<NUM>\d+(\.\d+)?) |
@@ -34,7 +34,6 @@ def tokenizer(example):
     tokenised_example = []
     
     tokens = finditer(TOKEN_PATTERN, example)
-    
     for i in tokens:
         token_type = i.lastgroup
         data = i.group()

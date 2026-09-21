@@ -21,3 +21,7 @@ class TwoOperatorsInRowError(CalculatorError):
 class UnbalancedParenthesesError(CalculatorError):
     def __init__(self):
         super().__init__("В выражении несбалансирвоанное кол-во скобок")
+
+class ZeroDivError(CalculatorError):
+    def __init__(self):
+        super().__init__("В выражении присутствует деление на ноль")

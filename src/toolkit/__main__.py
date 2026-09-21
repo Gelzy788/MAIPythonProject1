@@ -1,5 +1,10 @@
 import argparse
 
+import sys
+
+from toolkit.calculator import calc_manager
+from toolkit.errors import CalculatorError
+
 def main():
     parser = argparse.ArgumentParser(prog="toolkit")
     subparser = parser.add_subparsers(dest="command", required=True)
@@ -13,7 +18,11 @@ def main():
     args = parser.parse_args()
 
     if args.command == "calc":
-        print("hello")
+        try:
+            print(calc_manager(args.example))
+        except CalculatorError as err:
+            print(str(err), file = sys.stderr)
+            sys.exit(2)
     elif args.command == "convert":
         print("convert")
 
