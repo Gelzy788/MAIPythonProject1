@@ -1,6 +1,9 @@
 from json import load
+from pathlib import Path
 
-with open("./src/toolkit/units.json", "r") as file:
+units_path = Path(__file__).parent / "units.json"
+
+with open(units_path, "r", encoding="utf-8") as file:
     UNITS = load(file)
 
 UNIT_GROUPS = {}

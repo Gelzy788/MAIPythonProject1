@@ -34,9 +34,9 @@ class InvalidUnitError(ConverterError):
     def __init__(self, unknown_unit: str):
         super().__init__(f"На вход подана неизвестная единица: {unknown_unit}")
 
-class IncompatibleUnitsError(ConverterError):
+class IncompetibleUnitsError(ConverterError):
     def __init__(self, unit1, unit2):
-        super().__init__(f"На входи программы поданы несовместимые единицы: {unit1}, {unit2}")
+        super().__init__(f"На вход программы поданы несовместимые единицы: {unit1}, {unit2}")
 
 class InvalidValueError(ConverterError):
     def __init__(self, value):

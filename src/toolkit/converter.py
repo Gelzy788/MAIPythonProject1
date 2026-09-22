@@ -1,7 +1,4 @@
-from decimal import Decimal
-
-from toolkit.converter_validation import validate_converter
-from toolkit.errors import InvalidUnitError, TemperatureBelowAbsZero
+from toolkit.errors import TemperatureBelowAbsZero
 from toolkit.units import UNITS, UNIT_GROUPS
 from toolkit.converter_validation import validate_converter
 
@@ -10,10 +7,7 @@ def converter_manager(value: str, from_unit: str, to_unit: str) -> float:
     to_unit = to_unit.lower()
     
     validate_converter(value, from_unit, to_unit)
-    return converter(float(value), from_unit, to_unit)
-
-def is_below_abs_zero(value, unit):
-    return (value < UNITS["temperature"][unit]["zero_offset"])
+    return convert(float(value), from_unit, to_unit)
 
 def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     from_unit_data = UNITS["temperature"][from_unit]
@@ -24,19 +18,17 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     
     return result_value
 
-def converter(value: float, from_unit: str, to_unit: str) -> float:
+def convert(value: float, from_unit: str, to_unit: str) -> float:
     group = UNIT_GROUPS[from_unit]
     
     if group == "temperature":
-        if is_below_abs_zero(value, from_unit):
+        if value < UNITS["temperature"][from_unit]["zero_offset"]:
             raise TemperatureBelowAbsZero
         else:
             return convert_temperature(value, from_unit, to_unit)
-    elif group == "mass" or group == "length":
+    else:
         coef = UNITS[group][from_unit] / UNITS[group][to_unit]
         return value / coef
-    else:
-        raise InvalidUnitError
 
 if __name__ == "__main__":
     print(convert_len_and_weight(35, "Km", "m"))

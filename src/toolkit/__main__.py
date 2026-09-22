@@ -1,12 +1,11 @@
 import argparse
-
-from decimal import Decimal
-
 import sys
+from decimal import Decimal
 
 from toolkit.calculator import calc_manager
 from toolkit.converter import converter_manager
 from toolkit.errors import CalculatorError, ConverterError
+
 
 def main():
     parser = argparse.ArgumentParser(prog="toolkit")
