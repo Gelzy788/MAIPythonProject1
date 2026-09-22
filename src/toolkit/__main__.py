@@ -1,9 +1,12 @@
 import argparse
 
+from decimal import Decimal
+
 import sys
 
 from toolkit.calculator import calc_manager
-from toolkit.errors import CalculatorError
+from toolkit.converter import converter_manager
+from toolkit.errors import CalculatorError, ConverterError
 
 def main():
     parser = argparse.ArgumentParser(prog="toolkit")
@@ -26,9 +29,12 @@ def main():
             print(str(err), file=sys.stderr)
             sys.exit(2)
     elif args.command == "convert":
-        print("convert:")
-        print("value:", args.value)
-        print(f"from {args.from_unit} to {args.to_unit}")
+        try:
+            converted_value = converter_manager(args.value, args.from_unit, args.to_unit)
+            print(format(Decimal(str(converted_value)), "f"))
+        except ConverterError as err:
+            print(str(err), file=sys.stderr)
+            sys.exit(2)
 
 if __name__ == "__main__":
     main()

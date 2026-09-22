@@ -35,9 +35,13 @@ class InvalidUnitError(ConverterError):
         super().__init__(f"На вход подана неизвестная единица: {unknown_unit}")
 
 class IncompatibleUnitsError(ConverterError):
-    def __init__(self):
-        super().__init__("На входи программы поданы несовместимые единицы")
+    def __init__(self, unit1, unit2):
+        super().__init__(f"На входи программы поданы несовместимые единицы: {unit1}, {unit2}")
 
 class InvalidValueError(ConverterError):
     def __init__(self, value):
         super().__init__(f"Неправильно записано число: {value}")
+
+class TemperatureBelowAbsZero(ConverterError):
+    def __init__(self):
+        super().__init__("Температура не может быть ниже абсолютного нуля")

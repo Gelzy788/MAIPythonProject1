@@ -1,47 +1,42 @@
 from decimal import Decimal
 
-from toolkit.validation import validate_converter
-from toolkit.errors import InvalidUnitError
-
-UNITS = {
-    "mm": 1000,
-    "cm": 100,
-    "m": 1,
-    "km": 0.001,
-    "g": 1,
-    "kg": 0.001
-}
+from toolkit.converter_validation import validate_converter
+from toolkit.errors import InvalidUnitError, TemperatureBelowAbsZero
+from toolkit.units import UNITS, UNIT_GROUPS
+from toolkit.converter_validation import validate_converter
 
 def converter_manager(value: float, from_unit: str, to_unit: str) -> float:
-    validate_converter()
-    
-    if get_group(from_unit) in ["length", "mass"]:
-        return convert_len_and_weight(value, from_unit, to_unit)
-    else:
-        return convert_temperature(value, from_unit, to_unit)
-    
-def get_group(unit: str) -> str:
-    if unit in ["c", "f", "k"]:
-        return "temperature"
-    elif unit in UNITS:
-        if unit[-1] == "m":
-            return "length"
-        elif unit[-1] == "g":
-            return "mass"
-    else:
-        raise InvalidUnitError(unit)
-    
-def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
-    pass
+    validate_converter(value, from_unit, to_unit)
+    return converter(value, from_unit, to_unit)
 
-def convert_len_and_weight(value: float, from_unit: str, to_unit: str) -> float:
+def is_below_abs_zero(value, unit):
+    return (value < UNITS["temperature"][unit]["offset"])
+
+def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
+    from_unit_data = UNITS["temperature"][from_unit]
+    to_unit_data = UNITS["temperature"][to_unit]
+    
+    value_in_kelvin = (value - from_unit_data["zero_offset"]) / from_unit_data["coef"]
+    result_value = value_in_kelvin * to_unit_data["coef"] + to_unit_data["zero_offset"]
+    
+    return result_value
+
+def converter(value: float, from_unit: str, to_unit: str) -> float:
     from_unit = from_unit.lower()
     to_unit = to_unit.lower()
-        
-    coef = UNITS[from_unit]
-    coef /= UNITS[to_unit]
-        
-    return value / coef
+    
+    group = UNIT_GROUPS[from_unit]
+    
+    if group == "temperature":
+        if is_below_abs_zero(value, from_unit):
+            raise TemperatureBelowAbsZero
+        else:
+            return convert_temperature(value, from_unit, to_unit)
+    elif group == "mass" or group == "length":
+        coef = UNITS[group][from_unit] / UNITS[group][to_unit]
+        return value / coef
+    else:
+        raise InvalidUnitError
 
 if __name__ == "__main__":
     print(convert_len_and_weight(35, "Km", "m"))

@@ -1,4 +1,4 @@
-from toolkit.validation import validate_calculator
+from toolkit.calc_validation import validate_calculator
 from toolkit.tokenizer import tokenize, mark_unary_operators
 from toolkit.tokenizer import Token
 from toolkit.errors import CalculatorError, ZeroDivError

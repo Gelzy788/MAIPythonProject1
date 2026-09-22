@@ -69,14 +69,6 @@ def check_operators(tokens):
     if state != 2:
         raise MissingOperandError(len(tokens))
 
-def validate_converter():
-    pass
-
-def check_value(value: str):
-    try: float(value)
-    except ValueError:
-        raise InvalidValueError(value)
-
 # TODO: Сделать проверку друбных чисел
 # TODO: Не работает вывод ошибки UNKNOWN в данном рпимере: python3 -m toolkit calc "-136 ++ $25266++24.3 -4 *+4-+5- -0.6" - почему-то не отлавливается только доллар
 # TODO: В данном примере выводится не та ошибка: python3 -m toolkit calc "-136 +++ $25266++24.3 -4 *+4-+5- -0.6"
