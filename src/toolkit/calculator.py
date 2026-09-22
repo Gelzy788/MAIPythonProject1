@@ -132,7 +132,3 @@ def rpn_to_result(tokenized_example):
     else:
         raise CalculatorError("В стэке остались значения: выражение написано с ошибкой")
             
-
-if __name__ == "__main__":
-    example = "(1 +    1) /(1-1)  * 456 + 5"
-    print(calc_manager(example))

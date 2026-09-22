@@ -17,7 +17,7 @@ OPERATIONS = {
 class Token():
     # Аннотация для dataclass
     token_type: str
-    data: Union[None, float] = None
+    data: Union[None, float, str] = None
 
 def tokenize(example):
     # Паттерн токенизации
@@ -47,7 +47,7 @@ def tokenize(example):
         elif token_type == "UNKNOWN":
             tokenised_example.append(Token(token_type, data))
         
-        if token_type == "NUM":
+        elif token_type == "NUM":
             tokenised_example.append(Token(token_type, float(data)))
         elif token_type in OPERATIONS.keys():
             tokenised_example.append(Token("OPERATION", OPERATIONS.get(token_type)))
@@ -62,6 +62,3 @@ def mark_unary_operators(tokenized_example):
             or tokenized_example[i-1].token_type == "LPAREN"
             or tokenized_example[i-1].token_type == "OPERATION"):
                 tokenized_example[i].token_type = "UOPERATION"
-    
-if __name__ == "__main__":
-    print(tokenizer("(-1 +    1) /3.53  * 456"))
