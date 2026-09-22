@@ -5,12 +5,15 @@ from toolkit.errors import InvalidUnitError, TemperatureBelowAbsZero
 from toolkit.units import UNITS, UNIT_GROUPS
 from toolkit.converter_validation import validate_converter
 
-def converter_manager(value: float, from_unit: str, to_unit: str) -> float:
+def converter_manager(value: str, from_unit: str, to_unit: str) -> float:
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+    
     validate_converter(value, from_unit, to_unit)
-    return converter(value, from_unit, to_unit)
+    return converter(float(value), from_unit, to_unit)
 
 def is_below_abs_zero(value, unit):
-    return (value < UNITS["temperature"][unit]["offset"])
+    return (value < UNITS["temperature"][unit]["zero_offset"])
 
 def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     from_unit_data = UNITS["temperature"][from_unit]
@@ -22,9 +25,6 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     return result_value
 
 def converter(value: float, from_unit: str, to_unit: str) -> float:
-    from_unit = from_unit.lower()
-    to_unit = to_unit.lower()
-    
     group = UNIT_GROUPS[from_unit]
     
     if group == "temperature":

@@ -2,8 +2,8 @@
     "length":   {"mm": 1000, "cm": 100, "m": 1, "km": 0.001},
     "mass":     {"g": 1, "kg": 0.001},
     "temperature":  {
-        "c": {"coef": 1, "zero_offset": 273.15},
-        "f": {"coef": 1.8, "zero_offset": 459.67},
-        "k": {"coef": 1, "zero_offset": 1.8}
+        "c": {"coef": 1, "zero_offset": -273.15},
+        "f": {"coef": 1.8, "zero_offset": -459.67},
+        "k": {"coef": 1, "zero_offset": 0}
     }
 }

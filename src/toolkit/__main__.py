@@ -16,7 +16,7 @@ def main():
     sub_calc.add_argument("example", help="Математическое выражение")
 
     sub_convert = subparser.add_parser("convert", help="Конвертер: \tconvert VALUE --from UNIT --to UNIT")
-    sub_convert.add_argument("value", type=float)
+    sub_convert.add_argument("value")
     sub_convert.add_argument("--from", dest="from_unit", required=True)
     sub_convert.add_argument("--to", dest="to_unit", required=True)
 
@@ -31,7 +31,8 @@ def main():
     elif args.command == "convert":
         try:
             converted_value = converter_manager(args.value, args.from_unit, args.to_unit)
-            print(format(Decimal(str(converted_value)), "f"))
+            rounded_result = Decimal(f"{converted_value:.12g}")
+            print(format(rounded_result.normalize(), "f"))
         except ConverterError as err:
             print(str(err), file=sys.stderr)
             sys.exit(2)
