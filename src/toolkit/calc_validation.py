@@ -53,8 +53,9 @@ def check_operators(tokens):
                 state = 2
             elif token.token_type == "LPAREN":
                 state = 0
-            elif token.token_type == "UOPERATION":
-                raise TwoOperatorsInRowError(position)
+            elif token.token_type == "OPERATION":
+                print(position, token)
+                raise TwoOperatorsInRowError(position-1)
             else:
                 raise MissingOperatorError(position)
 

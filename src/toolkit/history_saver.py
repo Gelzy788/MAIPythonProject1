@@ -2,6 +2,7 @@ from json import load, JSONDecodeError, dump
 from pathlib import Path
 from toolkit.constants import HISTORY_FILENAME, HISTORY_PATH
 
+
 def add_calculation_to_history(example: str, result: float):
     history_data = read_history_file()
     new_data = {"type": "calculation",
@@ -10,7 +11,7 @@ def add_calculation_to_history(example: str, result: float):
     history_data.append(new_data)
     save_file(history_data)
 
-def add_convertation_to_history(value: float, from_unit: str, to_unit: str, result: str):
+def add_convertation_to_history(value: str, from_unit: str, to_unit: str, result: str):
     history_data = read_history_file()
     new_data = {"type": "convertation",
                 "value": value,
