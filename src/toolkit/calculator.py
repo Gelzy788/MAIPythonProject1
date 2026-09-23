@@ -2,18 +2,8 @@ from toolkit.calc_validation import validate_calculator
 from toolkit.tokenizer import tokenize, mark_unary_operators
 from toolkit.tokenizer import Token
 from toolkit.errors import CalculatorError, ZeroDivError
+from toolkit.constants import OP_PRIORITY, UNARY_PRIORITY
 
-# Словарь с приоритетами различных операций(кроме унарных)
-OP_PRIORITY = {
-    "+": 0,
-    "-": 0,
-    "*": 1,
-    "/": 1,
-    "%": 1,
-    "//": 1,
-}
-
-UNARY_PRIORITY = 2  # Константа приоритета для унарных операций
 
 # Функция получения приоритета операции для сортировочной станции
 def get_priority(token):

@@ -1,5 +1,5 @@
 from toolkit.errors import TemperatureBelowAbsZero
-from toolkit.units import UNITS, UNIT_GROUPS
+from toolkit.constants import UNITS, UNIT_GROUPS
 from toolkit.converter_validation import validate_converter
 
 def converter_manager(value: str, from_unit: str, to_unit: str) -> float:

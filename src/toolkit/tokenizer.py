@@ -2,16 +2,9 @@ from typing import Union
 
 from dataclasses import dataclass
 
-from re import finditer, compile, VERBOSE
+from re import finditer
 
-OPERATIONS = {
-    "PLUS": "+",
-    "MINUS": "-",
-    "MUL": "*",
-    "DIV": "/",
-    "INTDIV": "//",
-    "MOD": "%"
-}
+from toolkit.constants import TOKEN_PATTERN, OPERATIONS
 
 @dataclass
 class Token():
@@ -20,21 +13,6 @@ class Token():
     data: Union[None, float, str] = None
 
 def tokenize(example):
-    # Паттерн токенизации
-    TOKEN_PATTERN = compile(r"""
-    (?P<NUM>\d+(\.\d+)?) |
-    (?P<PLUS>\+) |
-    (?P<MINUS>-) |
-    (?P<MUL>\*) |
-    (?P<MOD>%) |
-    (?P<INTDIV>//) |
-    (?P<DIV>/) |
-    (?P<LPAREN>\() |
-    (?P<RPAREN>\)) |
-    (?P<OMISSION>\s+) |
-    (?P<UNKNOWN>.)
-    """, VERBOSE)
-    
     tokenised_example = []
     
     tokens = finditer(TOKEN_PATTERN, example)

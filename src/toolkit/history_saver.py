@@ -1,9 +1,7 @@
 from json import load, JSONDecodeError, dump
 from pathlib import Path
+from toolkit.constants import HISTORY_FILENAME, HISTORY_PATH
 
-FILENAME = "history.json"
-HISTORY_PATH = Path(__file__).parent.parent / "logs" / FILENAME
-я
 def add_calculation_to_history(example: str, result: float):
     history_data = read_history_file()
     new_data = {"type": "calculation",
@@ -24,7 +22,7 @@ def add_convertation_to_history(value: float, from_unit: str, to_unit: str, resu
 
 def read_history_file():
     try:
-        with open(HISTORY_PATH, "r", encoding="utf-8") as file:
+        with open(HISTORY_PATH / HISTORY_FILENAME, "r", encoding="utf-8") as file:
             data = load(file)
     except (JSONDecodeError, FileNotFoundError) as err:
         data = []
@@ -32,8 +30,8 @@ def read_history_file():
 
 def save_file(data: list):
     try:
-        with open(HISTORY_PATH, "w", encoding="utf-8") as file:
+        with open(HISTORY_PATH / HISTORY_FILENAME, "w", encoding="utf-8") as file:
             dump(data, file, indent=4)
     except OSError:
-        pass
+        print("!!!")
 

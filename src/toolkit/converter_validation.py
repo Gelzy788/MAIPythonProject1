@@ -1,4 +1,4 @@
-from toolkit.units import UNIT_GROUPS
+from toolkit.constants import UNIT_GROUPS
 from toolkit.errors import (InvalidUnitError,
                             InvalidValueError,
                             IncompetibleUnitsError)
