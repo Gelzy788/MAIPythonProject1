@@ -1,6 +1,7 @@
 from json import load, JSONDecodeError, dump
 
-FILENAME = "history.json"
+FILENAME = "history.json"   #NOTE: Мб стоит сделать отдельный файл config.py для таких констант
+# NOTE Мб стоит поменять путь сохранения history.json
 
 def add_calculation_to_history(example: str, result: float):
     history_data = read_history_file()
