@@ -1,6 +1,9 @@
 from json import load, JSONDecodeError, dump
+from pathlib import Path
 
-FILENAME = "history.json"   #NOTE: Мб стоит сделать отдельный файл config.py для таких констант
+FILENAME = "history.json"
+HISTORY_PATH = Path(__file__).parent.parent / "logs" / FILENAME
+# HISTORY_PATH.mkdir(parents=True, exist_ok=True)
 # NOTE Мб стоит поменять путь сохранения history.json
 
 def add_calculation_to_history(example: str, result: float):
@@ -10,7 +13,6 @@ def add_calculation_to_history(example: str, result: float):
                 "result": result}
     history_data.append(new_data)
     save_file(history_data)
-    print("Данные добавлены")
 
 def add_convertation_to_history(value: float, from_unit: str, to_unit: str, result: str):
     history_data = read_history_file()
@@ -21,18 +23,19 @@ def add_convertation_to_history(value: float, from_unit: str, to_unit: str, resu
                 "result": result}
     history_data.append(new_data)
     save_file(history_data)
-    print("Данные добавлены!")
 
 def read_history_file():
     try:
-        with open(FILENAME, "r", encoding="utf-8") as file:
+        with open(HISTORY_PATH, "r", encoding="utf-8") as file:
             data = load(file)
     except (JSONDecodeError, FileNotFoundError) as err:
         data = []
     return data
 
 def save_file(data: list):
-    # TODO: Сделать обработку ошибок
-    with open(FILENAME, "w", encoding="utf-8") as file:
-        dump(data, file, indent=4)
+    try:
+        with open(HISTORY_PATH, "w", encoding="utf-8") as file:
+            dump(data, file, indent=4)
+    except OSError:
+        pass
 

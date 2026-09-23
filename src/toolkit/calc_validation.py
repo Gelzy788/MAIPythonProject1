@@ -70,4 +70,5 @@ def check_operators(tokens):
         raise MissingOperandError(len(tokens))
 
 # TODO: Сделать проверку друбных чисел
+# TODO: python -m toolkit calc -- "-+---+3" - В выражении пропущен оператор на позиции 1
 # TODO: В данном примере выводится не та ошибка: python3 -m toolkit calc "-136 +++ $25266++24.3 -4 *+4-+5- -0.6"

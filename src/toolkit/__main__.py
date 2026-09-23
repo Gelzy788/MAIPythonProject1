@@ -25,11 +25,15 @@ def main():
     if args.command == "calc":
         try:
             result = calc_manager(args.example)
-            add_calculation_to_history(args.example, result)
             print(result)
         except CalculatorError as err:
             print(str(err), file=sys.stderr)
             sys.exit(2)
+        try:
+            add_calculation_to_history(args.example, result)
+        except OSError as err:
+            print("Сохранить историю вычислений не поулчилось!")
+            pass
     elif args.command == "convert":
         try:
             converted_value = converter_manager(args.value, args.from_unit, args.to_unit)
