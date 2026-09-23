@@ -3,9 +3,7 @@ from pathlib import Path
 
 FILENAME = "history.json"
 HISTORY_PATH = Path(__file__).parent.parent / "logs" / FILENAME
-# HISTORY_PATH.mkdir(parents=True, exist_ok=True)
-# NOTE Мб стоит поменять путь сохранения history.json
-
+я
 def add_calculation_to_history(example: str, result: float):
     history_data = read_history_file()
     new_data = {"type": "calculation",
