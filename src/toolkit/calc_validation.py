@@ -46,7 +46,7 @@ def check_operators(tokens):
             elif token.token_type == "UOPERATION":
                 state = 1
             else:
-                raise MissingOperandError(position)
+                raise MissingOperatorError(position)
             
         elif state == 1:
             if token.token_type == "NUM":
@@ -54,7 +54,6 @@ def check_operators(tokens):
             elif token.token_type == "LPAREN":
                 state = 0
             elif token.token_type == "OPERATION":
-                print(position, token)
                 raise TwoOperatorsInRowError(position-1)
             else:
                 raise MissingOperatorError(position)
@@ -64,12 +63,13 @@ def check_operators(tokens):
                 state = 0
             elif token.token_type == "RPAREN":
                 pass
+            elif token.token_type == "NUM":
+                raise MissingOperatorError(position)
             else:
+                print(position, token)
                 raise TwoOperatorsInRowError(position)
 
     if state != 2:
         raise MissingOperandError(len(tokens))
 
 # TODO: Сделать проверку друбных чисел
-# TODO: python -m toolkit calc -- "-+---+3" - В выражении пропущен оператор на позиции 1
-# TODO: В данном примере выводится не та ошибка: python3 -m toolkit calc "-136 +++ $25266++24.3 -4 *+4-+5- -0.6"
