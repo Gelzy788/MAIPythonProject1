@@ -1,0 +1,38 @@
+[
+    {
+        "type": "convertation",
+        "value": "0.0001",
+        "from_unit": "mm",
+        "to_unit": "km",
+        "result": "0.0000000001"
+    },
+    {
+        "type": "calculation",
+        "example": "-136 ++ 25266++24.3 -4 *+4-+5- -0.6",
+        "result": 25133.899999999998
+    },
+    {
+        "type": "calculation",
+        "example": "-136 ++ 25266++24.3 -4 *+4-+5- -0.6",
+        "result": 25133.899999999998
+    },
+    {
+        "type": "calculation",
+        "example": "-136 ++ 25266++24.3 -4 *+4-+5- -0.6",
+        "result": 25133.899999999998
+    },
+    {
+        "type": "convertation",
+        "value": "0.0001",
+        "from_unit": "mm",
+        "to_unit": "km",
+        "result": "0.0000000001"
+    },
+    {
+        "type": "convertation",
+        "value": "0.0001",
+        "from_unit": "mm",
+        "to_unit": "km",
+        "result": "0.0000000001"
+    }
+]

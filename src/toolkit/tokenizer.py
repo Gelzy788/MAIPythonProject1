@@ -58,7 +58,8 @@ def tokenize(example):
 
 def mark_unary_operators(tokenized_example):
     for i in range(len(tokenized_example)):
-        if tokenized_example[i].token_type == "OPERATION" and tokenized_example[i].data in "+-" and (i == 0 
+        if (tokenized_example[i].token_type == "OPERATION"
+            and tokenized_example[i].data in "+-" and (i == 0
             or tokenized_example[i-1].token_type == "LPAREN"
-            or tokenized_example[i-1].token_type == "OPERATION"):
+            or tokenized_example[i-1].token_type == "OPERATION")):
                 tokenized_example[i].token_type = "UOPERATION"

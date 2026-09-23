@@ -5,6 +5,7 @@ from decimal import Decimal
 from toolkit.calculator import calc_manager
 from toolkit.converter import converter_manager
 from toolkit.errors import CalculatorError, ConverterError
+from toolkit.history_saver import add_calculation_to_history, add_convertation_to_history
 
 
 def main():
@@ -23,7 +24,9 @@ def main():
 
     if args.command == "calc":
         try:
-            print(calc_manager(args.example))
+            result = calc_manager(args.example)
+            add_calculation_to_history(args.example, result)
+            print(result)
         except CalculatorError as err:
             print(str(err), file=sys.stderr)
             sys.exit(2)
@@ -31,7 +34,9 @@ def main():
         try:
             converted_value = converter_manager(args.value, args.from_unit, args.to_unit)
             rounded_result = Decimal(f"{converted_value:.12g}")
-            print(format(rounded_result.normalize(), "f"))
+            result = format(rounded_result.normalize(), "f")
+            add_convertation_to_history(args.value, args.from_unit, args.to_unit, result)
+            print(result)
         except ConverterError as err:
             print(str(err), file=sys.stderr)
             sys.exit(2)

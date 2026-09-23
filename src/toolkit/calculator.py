@@ -65,8 +65,6 @@ def calc_manager(example):
     tokenized_example = tokenize(example)
     mark_unary_operators(tokenized_example)
     
-    print(tokenized_example)
-    
     # Валидация
     validate_calculator(tokenized_example)
     
@@ -74,8 +72,6 @@ def calc_manager(example):
     rpn_example = example_to_rpn(tokenized_example)
     # Получение результата из rpn
     result = rpn_to_result(rpn_example)
-    
-    # TODO: Запись в json
     
     return result
 
