@@ -31,7 +31,7 @@ def main():
             sys.exit(2)
         try:
             add_calculation_to_history(args.example, result)
-        except OSError as err:
+        except OSError:
             print("Сохранить историю вычислений не поулчилось!")
             pass
     elif args.command == "convert":

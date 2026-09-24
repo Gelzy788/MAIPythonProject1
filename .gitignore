@@ -5,6 +5,7 @@ __pycache__/
 
 # Development
 .kanban
+tests/
 
 # logs
 logs/

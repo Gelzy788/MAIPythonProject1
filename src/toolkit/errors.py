@@ -6,17 +6,27 @@ class ConverterError(Exception):
     # Базовая ошибка для конвертера
     pass
 
+class FloatSpecialDivError(CalculatorError):
+    def __init__(self):
+        super().__init__("Операторы // и % не могут взаимодействовать" +
+                        "с числами с запятой")
+
 class EmptyExpressionError(CalculatorError):
     def __init__(self):
         super().__init__("Пустое выражение")
     
 class InvalidSymbolError(CalculatorError):
     def __init__(self, symbol, position):
-        super().__init__(f"В выражении неизвестный символ {symbol} на позиции {position}")
+        super().__init__("В выражении неизвестный символ" + 
+                        f"{symbol} на позиции {position}")
 
 class MissingOperatorError(CalculatorError):
     def __init__(self, position):
         super().__init__(f"В выражении пропущен оператор на позиции {position}")
+
+class MissingOperandError(CalculatorError):
+    def __init__(self, position):
+        super().__init__(f"В выражении пропущен операнд на позиции {position}")
 
 class TwoOperatorsInRowError(CalculatorError):
     def __init__(self, position):
@@ -36,7 +46,8 @@ class InvalidUnitError(ConverterError):
 
 class IncompetibleUnitsError(ConverterError):
     def __init__(self, unit1, unit2):
-        super().__init__(f"На вход программы поданы несовместимые единицы: {unit1}, {unit2}")
+        super().__init__("На вход программы поданы несовместимые единицы:" +
+                        f"{unit1}, {unit2}")
 
 class InvalidValueError(ConverterError):
     def __init__(self, value):

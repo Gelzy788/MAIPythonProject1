@@ -1,7 +1,7 @@
 from toolkit.calc_validation import validate_calculator
 from toolkit.tokenizer import tokenize, mark_unary_operators
 from toolkit.tokenizer import Token
-from toolkit.errors import CalculatorError, ZeroDivError
+from toolkit.errors import CalculatorError, ZeroDivError, FloatSpecialDivError
 from toolkit.constants import OP_PRIORITY, UNARY_PRIORITY
 
 
@@ -13,6 +13,8 @@ def get_priority(token):
 
 # Вспомогательная функция для примененяи операций при подсчете rpn
 def apply_operation(num1, num2, operation):
+    if operation in ["//", "%"] and (type(num1.data) != int or type(num2.data) != int):
+        raise FloatSpecialDivError()
     if operation == "+":
         res = num2.data + num1.data
     elif operation == "-":
@@ -113,6 +115,7 @@ def rpn_to_result(tokenized_example):
                 raise ZeroDivError()
             
             stack.push(apply_operation(num1, num2, token.data))
+            
     if stack.lenth() == 1:
         return stack.peek().data
     else:

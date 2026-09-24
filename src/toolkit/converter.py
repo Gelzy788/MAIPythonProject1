@@ -29,6 +29,3 @@ def convert(value: float, from_unit: str, to_unit: str) -> float:
     else:
         coef = UNITS[group][from_unit] / UNITS[group][to_unit]
         return value / coef
-
-if __name__ == "__main__":
-    print(convert_len_and_weight(35, "Km", "m"))

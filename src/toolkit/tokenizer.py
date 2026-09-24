@@ -10,7 +10,7 @@ from toolkit.constants import TOKEN_PATTERN, OPERATIONS
 class Token():
     # Аннотация для dataclass
     token_type: str
-    data: Union[None, float, str] = None
+    data: Union[None, float, int, str] = None
 
 def tokenize(example):
     tokenised_example = []
@@ -26,7 +26,11 @@ def tokenize(example):
             tokenised_example.append(Token(token_type, data))
         
         elif token_type == "NUM":
-            tokenised_example.append(Token(token_type, float(data)))
+            if "." in data:
+                tokenised_example.append(Token(token_type, float(data)))
+            else:
+                tokenised_example.append(Token(token_type, int(data)))
+                
         elif token_type in OPERATIONS.keys():
             tokenised_example.append(Token("OPERATION", OPERATIONS.get(token_type)))
         else:

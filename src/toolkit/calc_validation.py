@@ -1,4 +1,11 @@
-from toolkit.errors import *
+from toolkit.errors import (
+    EmptyExpressionError,
+    InvalidSymbolError,
+    MissingOperandError,
+    MissingOperatorError,
+    TwoOperatorsInRowError,
+    UnbalancedParenthesesError,
+)
 
 def validate_calculator(tokenized_example):
     check_empty(tokenized_example)
@@ -45,30 +52,32 @@ def check_operators(tokens):
                 pass  # состояние не меняется
             elif token.token_type == "UOPERATION":
                 state = 1
+            elif token.token_type == "OPERATION" and position > 0 \
+                    and tokens[position - 1].token_type == "OPERATION":
+                raise TwoOperatorsInRowError(position)
             else:
-                raise MissingOperatorError(position)
-            
+                raise MissingOperandError(position)
+
         elif state == 1:
             if token.token_type == "NUM":
                 state = 2
             elif token.token_type == "LPAREN":
                 state = 0
             elif token.token_type == "OPERATION":
-                raise TwoOperatorsInRowError(position-1)
+                raise TwoOperatorsInRowError(position)
             else:
-                raise MissingOperatorError(position)
+                raise MissingOperandError(position)
 
         elif state == 2:
             if token.token_type == "OPERATION":
                 state = 0
             elif token.token_type == "RPAREN":
                 pass
-            elif token.token_type == "NUM":
-                raise MissingOperatorError(position)
             else:
-                print(position, token)
-                raise TwoOperatorsInRowError(position)
+                # число или "(" сразу после числа / ")"
+                raise MissingOperatorError(position)
 
+    # выражение не должно заканчиваться оператором
     if state != 2:
         raise MissingOperandError(len(tokens))
 
