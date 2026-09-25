@@ -56,3 +56,7 @@ class InvalidValueError(ConverterError):
 class TemperatureBelowAbsZero(ConverterError):
     def __init__(self):
         super().__init__("Температура не может быть ниже абсолютного нуля")
+
+class HistorySaveError(Exception):
+    def __init__(self):
+        super().__init__("Произошла ошибка сохранения истории")

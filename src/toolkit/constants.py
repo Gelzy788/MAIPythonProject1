@@ -27,8 +27,7 @@ OP_PRIORITY = {
 UNARY_PRIORITY = 2  # Константа приоритета для унарных операций
 
 HISTORY_FILENAME = "history.json"
-HISTORY_PATH = Path(__file__).parent.parent.parent / "logs"
-HISTORY_PATH.mkdir(exist_ok=True)
+HISTORY_PATH = Path.cwd() / "logs"
 
 # Паттерн токенизации
 TOKEN_PATTERN = compile(r"""

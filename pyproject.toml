@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Calcventer-toolkit"
+version = "0.9.5"
+description = "Калькулятор и конвертер величин, написанный на python вызывается через командную строку аргументами calc и convert"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [{name = "Негм Али"}]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+toolkit = ["*.json"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.9"
+]
