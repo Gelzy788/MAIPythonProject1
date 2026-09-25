@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from toolkit.calculator import calc_manager
 from toolkit.converter import converter_manager
-from toolkit.errors import CalculatorError, ConverterError, CalcConverterError
+from toolkit.errors import CalcConverterError
 from toolkit.history_saver import (
     add_calculation_to_history,
     add_convertation_to_history,
