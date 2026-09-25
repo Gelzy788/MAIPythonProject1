@@ -97,11 +97,12 @@ def check_example_structure(tokenized_example: list):
     state = 0
 
     for position, token in enumerate(tokenized_example):
+        # Ищем начало операнда
         if state == 0:
             if token.token_type == "NUM":
                 state = 2
             elif token.token_type == "LPAREN":
-                pass  # состояние не меняется
+                pass
             elif token.token_type == "UOPERATION":
                 state = 1
             elif token.token_type == "OPERATION" and position > 0 \
@@ -110,6 +111,7 @@ def check_example_structure(tokenized_example: list):
             else:
                 raise MissingOperandError(position)
 
+        # Если прошлым мыл унарный оператор
         elif state == 1:
             if token.token_type == "NUM":
                 state = 2
@@ -120,6 +122,7 @@ def check_example_structure(tokenized_example: list):
             else:
                 raise MissingOperandError(position)
 
+        # Если прошлым было число
         elif state == 2:
             if token.token_type == "OPERATION":
                 state = 0

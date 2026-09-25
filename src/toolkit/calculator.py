@@ -125,24 +125,33 @@ def example_to_rpn(tokenized_example: list) -> list:
     for token in tokenized_example:
         if token.token_type == "NUM":
             rpn_result.append(token)
+            
         elif token.token_type == "LPAREN":
             stack.push(token)
+            
         elif token.token_type == "OPERATION":
+            # Вытаскивание операторов из стэка, пока приоритет не будет ниже текущего оператора
             while (not stack.is_empty() and (stack.peek().token_type == "OPERATION" or
                     stack.peek().token_type == "UOPERATION")
                     and get_priority(stack.peek()) >= get_priority(token)):
                 rpn_result.append(stack.pop())
+                
             stack.push(token)
+        
         elif token.token_type == "UOPERATION":
+            # Вытаскивание операторов из стэка, пока приоритет не будет ниже текущего оператора
             while (not stack.is_empty() and (stack.peek().token_type == "OPERATION" or
                     stack.peek().token_type == "UOPERATION")
                     and get_priority(stack.peek()) > get_priority(token)):
                 rpn_result.append(stack.pop())
+                
             stack.push(token)
+            
         elif token.token_type == "RPAREN":
             while (not stack.is_empty() and stack.peek().token_type != "LPAREN"):
                 rpn_result.append(stack.pop())
             stack.pop()
+            
     while not stack.is_empty():
         rpn_result.append(stack.pop())
     return rpn_result

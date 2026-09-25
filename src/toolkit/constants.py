@@ -2,12 +2,14 @@ from json import load
 from pathlib import Path
 from re import VERBOSE, compile
 
+# Путь к конфигурационному файлу для конвертации
 UNITS_PATH = Path(__file__).parent / "units.json"
 
+# Загрузка данных из файла units.json
 with open(UNITS_PATH, "r", encoding="utf-8") as file:
-    UNITS = load(file)
+    UNITS = load(file) # Все данные из файла
 
-UNIT_GROUPS = {}
+UNIT_GROUPS = {} # какой величине соответствует какая группа
 
 for group, units in UNITS.items():
     for unit in units.keys():
@@ -26,8 +28,8 @@ OP_PRIORITY = {
 }
 UNARY_PRIORITY = 2  # Константа приоритета для унарных операций
 
-HISTORY_FILENAME = "history.json"
-HISTORY_PATH = Path.cwd() / "logs"
+HISTORY_FILENAME = "history.json" # Название файла с историей вычислений
+HISTORY_PATH = Path.cwd() / "logs" # Путь к файлу с историев вычислений
 
 # Паттерн токенизации
 TOKEN_PATTERN = compile(r"""
@@ -44,6 +46,7 @@ TOKEN_PATTERN = compile(r"""
 (?P<UNKNOWN>.)
 """, VERBOSE)
 
+# Преобразование операций из названия группы в соответствующий символ
 OPERATIONS = {
     "PLUS": "+",
     "MINUS": "-",

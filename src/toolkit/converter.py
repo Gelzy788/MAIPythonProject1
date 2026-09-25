@@ -31,6 +31,7 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     Returns:
         Результат конвертации температуры
     """
+    # получаем коэффициенты перевода температур
     from_unit_data = UNITS["temperature"][from_unit]
     to_unit_data = UNITS["temperature"][to_unit]
     
