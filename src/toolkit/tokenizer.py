@@ -8,11 +8,34 @@ from toolkit.constants import TOKEN_PATTERN, OPERATIONS
 
 @dataclass
 class Token():
-    # Аннотация для dataclass
+    """Класс токена
+    
+        Хранит в себе два поля: тип токена и его значение. Тип токена всегда в str и
+        пишется заглавными буквами(Например NUM, LPAREN, OPERATION).
+        Значение токена может быть None, float, int и str, в зависимости от типа токена:
+            NUM: int|float
+            RPAREN: None
+            LPAREN: None
+            UNKNOWN: None
+            OPERATION: str
+        
+        token_type: Тип токена
+        data: Значение токена
+    """
     token_type: str
     data: Union[None, float, int, str] = None
 
-def tokenize(example: str):
+def tokenize(example: str) -> list:
+    """Токенизатор
+    
+        Токенизирует выражение, поданное на вход, выдавая список токенов игнорирует пробелы
+
+    Args:
+        example: Выражение
+
+    Returns:
+        Токинизированное выражение: список токенов
+    """
     tokenised_example = []
     
     tokens = finditer(TOKEN_PATTERN, example)
@@ -23,7 +46,7 @@ def tokenize(example: str):
         if token_type == "OMISSION":
             continue
         elif token_type == "UNKNOWN":
-            tokenised_example.append(Token(token_type, data))
+            tokenised_example.append(Token(token_type, None))
         
         elif token_type == "NUM":
             if "." in data:
@@ -39,6 +62,14 @@ def tokenize(example: str):
     return tokenised_example
 
 def mark_unary_operators(tokenized_example: list):
+    """Нахождение унарных операторов
+    
+        Ищет унарные операторы и меняет их тип класса с OPERATION на UOPERATION
+
+    Args:
+        tokenized_example: Токенизированное выражение 
+    """
+    
     for i in range(len(tokenized_example)):
         if (tokenized_example[i].token_type == "OPERATION"
             and tokenized_example[i].data in "+-" and (i == 0

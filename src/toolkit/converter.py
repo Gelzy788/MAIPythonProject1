@@ -3,6 +3,17 @@ from toolkit.constants import UNITS, UNIT_GROUPS
 from toolkit.converter_validation import validate_converter
 
 def converter_manager(value: str, from_unit: str, to_unit: str) -> float:
+    """Главная входная точка всей программы-конвертера
+    Является центром конвертера, вызывает все функции
+
+    Args:
+        value: Число, которое нужно перевест
+        from_unit: Из какой величины перевести
+        to_unit: В какую величину перевести
+
+    Returns:
+        Результат конвертации
+    """
     from_unit = from_unit.lower()
     to_unit = to_unit.lower()
     
@@ -10,6 +21,16 @@ def converter_manager(value: str, from_unit: str, to_unit: str) -> float:
     return convert(float(value), from_unit, to_unit)
 
 def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
+    """Конвертация температуры
+
+    Args:
+        value: Число, которое нужно перевест
+        from_unit: Из какой величины перевести
+        to_unit: В какую величину перевести
+
+    Returns:
+        Результат конвертации температуры
+    """
     from_unit_data = UNITS["temperature"][from_unit]
     to_unit_data = UNITS["temperature"][to_unit]
     
@@ -19,6 +40,21 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     return result_value
 
 def convert(value: float, from_unit: str, to_unit: str) -> float:
+    """Конвертер
+        Конвертирует величины и выдает результат
+
+    Args:
+        value: Число, которое нужно перевест
+        from_unit: Из какой величины перевести
+        to_unit: В какую величину перевести
+
+    Raises:
+        TemperatureBelowAbsZero: Если на вход подана температура ниже абсолютного нуля
+
+    Returns:
+        Результат перевода
+    """
+    
     group = UNIT_GROUPS[from_unit]
     
     if group == "temperature":
