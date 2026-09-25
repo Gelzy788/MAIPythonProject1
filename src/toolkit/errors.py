@@ -61,7 +61,7 @@ class IncompetibleUnitsError(ConverterError):
 
 class InvalidValueError(ConverterError):
     """Ошибка неправильного ввода числа в конвертер"""
-    def __init__(self, value: int | float):
+    def __init__(self, value: float):
         super().__init__(f"Неправильно записано число: {value}")
 
 class TemperatureBelowAbsZero(ConverterError):

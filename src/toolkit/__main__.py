@@ -5,7 +5,10 @@ from decimal import Decimal
 from toolkit.calculator import calc_manager
 from toolkit.converter import converter_manager
 from toolkit.errors import CalculatorError, ConverterError
-from toolkit.history_saver import add_calculation_to_history, add_convertation_to_history
+from toolkit.history_saver import (
+    add_calculation_to_history,
+    add_convertation_to_history,
+)
 
 
 def main():
@@ -39,7 +42,6 @@ def main():
             add_calculation_to_history(args.example, result)
         except OSError:
             print("Сохранить историю вычислений не поулчилось!")
-            pass
         
     elif args.command == "convert":
         try:

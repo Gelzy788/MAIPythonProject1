@@ -1,7 +1,7 @@
 from toolkit.calc_validation import validate_calculator
-from toolkit.tokenizer import tokenize, mark_unary_operators, Token
-from toolkit.errors import CalculatorError, ZeroDivError, FloatSpecialDivError
 from toolkit.constants import OP_PRIORITY, UNARY_PRIORITY
+from toolkit.errors import CalculatorError, FloatSpecialDivError, ZeroDivError
+from toolkit.tokenizer import Token, mark_unary_operators, tokenize
 
 
 # Функция получения приоритета операции для сортировочной станции

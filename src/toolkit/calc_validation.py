@@ -7,6 +7,7 @@ from toolkit.errors import (
     UnbalancedParenthesesError,
 )
 
+
 def validate_calculator(tokenized_example):
     """Менеджер валидации калькулятора
     

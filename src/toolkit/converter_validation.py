@@ -1,9 +1,8 @@
-from toolkit.constants import UNIT_GROUPS
-from toolkit.errors import (InvalidUnitError,
-                            InvalidValueError,
-                            IncompetibleUnitsError)
-
 from math import isnan
+
+from toolkit.constants import UNIT_GROUPS
+from toolkit.errors import IncompetibleUnitsError, InvalidUnitError, InvalidValueError
+
 
 def validate_converter(value, unit1: str, unit2: str):
     """Менеджер валидации конвертера

@@ -1,5 +1,5 @@
-from json import load, JSONDecodeError, dump
-from pathlib import Path
+from json import JSONDecodeError, dump, load
+
 from toolkit.constants import HISTORY_FILENAME, HISTORY_PATH
 from toolkit.errors import HistorySaveError
 
@@ -54,7 +54,7 @@ def read_history_file() -> list:
         HISTORY_PATH.mkdir(exist_ok=True)
         with open(HISTORY_PATH / HISTORY_FILENAME, "r", encoding="utf-8") as file:
             data = load(file)
-    except (JSONDecodeError, FileNotFoundError) as err:
+    except (JSONDecodeError, FileNotFoundError):
         data = []
     return data
 

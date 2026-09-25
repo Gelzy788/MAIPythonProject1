@@ -1,13 +1,11 @@
-from typing import Union
-
 from dataclasses import dataclass
-
 from re import finditer
 
-from toolkit.constants import TOKEN_PATTERN, OPERATIONS
+from toolkit.constants import OPERATIONS, TOKEN_PATTERN
+
 
 @dataclass
-class Token():
+class Token:
     """Класс токена
     
         Хранит в себе два поля: тип токена и его значение. Тип токена всегда в str и
@@ -23,7 +21,7 @@ class Token():
         data: Значение токена
     """
     token_type: str
-    data: Union[None, float, int, str] = None
+    data: None | float | int | str = None
 
 def tokenize(example: str) -> list:
     """Токенизатор
