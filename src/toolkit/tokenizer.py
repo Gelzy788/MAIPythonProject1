@@ -52,7 +52,7 @@ def tokenize(example: str) -> list:
             else:
                 tokenised_example.append(Token(token_type, int(data)))
                 
-        elif token_type in OPERATIONS.keys():
+        elif token_type in OPERATIONS:
             tokenised_example.append(Token("OPERATION", OPERATIONS.get(token_type)))
         else:
             tokenised_example.append(Token(token_type))

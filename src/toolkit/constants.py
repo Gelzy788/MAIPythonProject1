@@ -12,7 +12,7 @@ with open(UNITS_PATH, "r", encoding="utf-8") as file:
 UNIT_GROUPS = {} # какой величине соответствует какая группа
 
 for group, units in UNITS.items():
-    for unit in units.keys():
+    for unit in units:
         UNIT_GROUPS[unit]= group
 
 
