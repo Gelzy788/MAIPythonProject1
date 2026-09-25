@@ -12,7 +12,7 @@ class Token():
     token_type: str
     data: Union[None, float, int, str] = None
 
-def tokenize(example):
+def tokenize(example: str):
     tokenised_example = []
     
     tokens = finditer(TOKEN_PATTERN, example)
@@ -38,7 +38,7 @@ def tokenize(example):
     
     return tokenised_example
 
-def mark_unary_operators(tokenized_example):
+def mark_unary_operators(tokenized_example: list):
     for i in range(len(tokenized_example)):
         if (tokenized_example[i].token_type == "OPERATION"
             and tokenized_example[i].data in "+-" and (i == 0

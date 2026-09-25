@@ -12,7 +12,7 @@ def get_priority(token):
     return OP_PRIORITY[token.data]
 
 # Вспомогательная функция для примененяи операций при подсчете rpn
-def apply_operation(num1, num2, operation):
+def apply_operation(num1: Token, num2: Token, operation: str):
     if operation in ["//", "%"] and (type(num1.data) != int or type(num2.data) != int):
         raise FloatSpecialDivError()
     if operation == "+":
@@ -52,7 +52,7 @@ class Stack:
         return len(self.items)
 
 # Главная входная точка всей программы-калькулятора
-def calc_manager(example):
+def calc_manager(example: str):
     # Перевод в токены
     tokenized_example = tokenize(example)
     mark_unary_operators(tokenized_example)
@@ -68,7 +68,7 @@ def calc_manager(example):
     return result
 
 # Превращение выражения в rpn по алгоритму сортировочной станции Дейкстры
-def example_to_rpn(tokenized_example):
+def example_to_rpn(tokenized_example: list):
     rpn_result = []
     stack = Stack()
     
@@ -98,7 +98,7 @@ def example_to_rpn(tokenized_example):
     return rpn_result
 
 # Подсчет rpn в результат
-def rpn_to_result(tokenized_example):
+def rpn_to_result(tokenized_example: list):
     stack = Stack()
     for token in tokenized_example:
         if token.token_type == "NUM":

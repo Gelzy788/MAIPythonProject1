@@ -16,20 +16,20 @@ class EmptyExpressionError(CalculatorError):
         super().__init__("Пустое выражение")
     
 class InvalidSymbolError(CalculatorError):
-    def __init__(self, symbol, position):
+    def __init__(self, symbol: str, position: int):
         super().__init__("В выражении неизвестный символ" + 
                         f"{symbol} на позиции {position}")
 
 class MissingOperatorError(CalculatorError):
-    def __init__(self, position):
+    def __init__(self, position: int):
         super().__init__(f"В выражении пропущен оператор на позиции {position}")
 
 class MissingOperandError(CalculatorError):
-    def __init__(self, position):
+    def __init__(self, position: int):
         super().__init__(f"В выражении пропущен операнд на позиции {position}")
 
 class TwoOperatorsInRowError(CalculatorError):
-    def __init__(self, position):
+    def __init__(self, position: int):
         super().__init__(f"Два оператора подряд на позиции {position}")
 
 class UnbalancedParenthesesError(CalculatorError):
@@ -45,12 +45,12 @@ class InvalidUnitError(ConverterError):
         super().__init__(f"На вход подана неизвестная единица: {unknown_unit}")
 
 class IncompetibleUnitsError(ConverterError):
-    def __init__(self, unit1, unit2):
+    def __init__(self, unit1: str, unit2: str):
         super().__init__("На вход программы поданы несовместимые единицы:" +
                         f"{unit1}, {unit2}")
 
 class InvalidValueError(ConverterError):
-    def __init__(self, value):
+    def __init__(self, value: int | float):
         super().__init__(f"Неправильно записано число: {value}")
 
 class TemperatureBelowAbsZero(ConverterError):
