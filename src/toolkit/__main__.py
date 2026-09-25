@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from toolkit.calculator import calc_manager
 from toolkit.converter import converter_manager
-from toolkit.errors import CalculatorError, ConverterError
+from toolkit.errors import CalculatorError, ConverterError, CalcConverterError
 from toolkit.history_saver import (
     add_calculation_to_history,
     add_convertation_to_history,
@@ -33,14 +33,14 @@ def main():
             # Получение результата
             result = calc_manager(args.example)
             print(result)
-        except CalculatorError as err:
+        except CalcConverterError as err:
             print(str(err), file=sys.stderr)
             sys.exit(2)
         
         # Загрузка вычисления в историю
         try:
             add_calculation_to_history(args.example, result)
-        except OSError:
+        except CalcConverterError, OSError:
             print("Сохранить историю вычислений не поулчилось!")
         
     elif args.command == "convert":
@@ -54,7 +54,7 @@ def main():
             add_convertation_to_history(args.value, args.from_unit, args.to_unit, result)
             
             print(result)
-        except ConverterError as err:
+        except CalcConverterError as err:
             print(str(err), file=sys.stderr)
             sys.exit(2)
 

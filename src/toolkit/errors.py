@@ -1,8 +1,12 @@
-class CalculatorError(Exception):
+class CalcConverterError(Exception):
+    # Базова ошибка всей программы
+    pass
+
+class CalculatorError(CalcConverterError):
     # Базовая ошибка для калькулятор
     pass
 
-class ConverterError(Exception):
+class ConverterError(CalcConverterError):
     # Базовая ошибка для конвертера
     pass
 
@@ -20,7 +24,7 @@ class EmptyExpressionError(CalculatorError):
 class InvalidSymbolError(CalculatorError):
     """Ошибка неизвестного символа в выражении"""
     def __init__(self, symbol: str, position: int):
-        super().__init__("В выражении неизвестный символ" + 
+        super().__init__("В выражении неизвестный символ " + 
                         f"{symbol} на позиции {position}")
 
 class MissingOperatorError(CalculatorError):
@@ -69,7 +73,7 @@ class TemperatureBelowAbsZero(ConverterError):
     def __init__(self):
         super().__init__("Температура не может быть ниже абсолютного нуля")
 
-class HistorySaveError(Exception):
+class HistorySaveError(CalcConverterError):
     """Ошибка сохранения истории вычислений"""
     def __init__(self):
         super().__init__("Произошла ошибка сохранения истории")
