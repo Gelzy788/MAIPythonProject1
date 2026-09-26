@@ -24,8 +24,8 @@ class EmptyExpressionError(CalculatorError):
 class InvalidSymbolError(CalculatorError):
     """Ошибка неизвестного символа в выражении"""
     def __init__(self, symbol: str, position: int):
-        super().__init__("В выражении неизвестный символ " + 
-                        f"{symbol} на позиции {position}")
+        super().__init__("В выражении неизвестный символ " +
+                        f"'{symbol}' на позиции {position}")
 
 class MissingOperatorError(CalculatorError):
     """Ошибка пропущенного оператора в выражении"""

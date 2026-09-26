@@ -1,6 +1,6 @@
 from toolkit.calc_validation import validate_calculator
 from toolkit.constants import OP_PRIORITY, UNARY_PRIORITY
-from toolkit.errors import CalculatorError, FloatSpecialDivError, ZeroDivError
+from toolkit.errors import FloatSpecialDivError, ZeroDivError
 from toolkit.tokenizer import Token, mark_unary_operators, tokenize
 
 
@@ -188,8 +188,5 @@ def rpn_to_result(tokenized_example: list) -> float | int:
             
             stack.push(apply_operation(num1, num2, token.data))
             
-    if stack.lenth() == 1:
-        return stack.peek().data
-    else:
-        raise CalculatorError("В стэке остались значения: выражение написано с ошибкой")
+    return stack.peek().data
             

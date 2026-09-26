@@ -51,6 +51,7 @@ def check_unknown_symbols(tokenized_example: list):
     """
     for pos, token in enumerate(tokenized_example):
         if token.token_type == "UNKNOWN":
+            print(token)
             raise InvalidSymbolError(token.data, pos)
 
 # Проверка баланска скобок

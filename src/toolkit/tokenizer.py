@@ -44,7 +44,7 @@ def tokenize(example: str) -> list:
         if token_type == "OMISSION":
             continue
         elif token_type == "UNKNOWN":
-            tokenised_example.append(Token(token_type, None))
+            tokenised_example.append(Token(token_type, data))
         
         elif token_type == "NUM":
             if "." in data:
